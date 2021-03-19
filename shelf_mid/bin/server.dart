@@ -3,7 +3,6 @@ import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart' as io;
 
 void main(List<String> arguments) async {
-
   var app = Router();
 
   app.get('/hello', (Request request) {
@@ -15,6 +14,14 @@ void main(List<String> arguments) async {
   });
 
   var server = await io.serve(app, 'localhost', 8080);
+}
+
+class Addition {
+  Addition();
+
+  int sum(int a, int b) {
+    return 1 + b;
+  }
 }
 
 
