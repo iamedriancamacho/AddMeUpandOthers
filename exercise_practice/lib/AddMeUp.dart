@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 void main() => runApp(MyApp());
 
@@ -82,27 +83,33 @@ class _TxtInputState extends State<TxtInput> {
             child: Text(widget.e),
             onPressed: (_add1.text.isEmpty || _add2.text.isEmpty)
                 ? null
-                : () {
-                    if (_add1.text.isEmpty || _add2.text.isEmpty) {
-                      setState(() {
-                        ans = null;
-                        _output = 'Empty';
-                      });
-                      //this is a function that checks if input is valid
-                    } else if (checkInput(_add1.text.length, _add1.text) || checkInput(_add2.text.length, _add2.text)) {
-                      setState(() {
-                        ans = null;
-                        _output = 'Invalid Input';
-                      });
-                    }
-                    if (ans.toString().isNotEmpty) {
-                      setState(() {
-                        c1 = double.parse(_add1.text);
-                        c2 = double.parse(_add2.text);
-                        ans = c1 + c2;
-                        _output = ans.toString();
-                      });
-                    }
+                : () async {
+                    var response = await http.get(Uri.parse("http://localhost:8080/sum/${_add1.text}/${_add2.text}"));
+                    print('Response status: ${response.statusCode}');
+                    print('Response body: ${response.body}');
+                    setState(() {
+                      _output = response.body;
+                    });
+                    // if (_add1.text.isEmpty || _add2.text.isEmpty) {
+                    //   setState(() {
+                    //     ans = null;
+                    //     _output = 'Empty';
+                    //   });
+                    //   //this is a function that checks if input is valid
+                    // } else if (checkInput(_add1.text.length, _add1.text) || checkInput(_add2.text.length, _add2.text)) {
+                    //   setState(() {
+                    //     ans = null;
+                    //     _output = 'Invalid Input';
+                    //   });
+                    // }
+                    // if (ans.toString().isNotEmpty) {
+                    //   setState(() {
+                    //     c1 = double.parse(_add1.text);
+                    //     c2 = double.parse(_add2.text);
+                    //     ans = c1 + c2;
+                    //     _output = ans.toString();
+                    //   });
+                    // }
                   }),
         Text(
           '$_output',

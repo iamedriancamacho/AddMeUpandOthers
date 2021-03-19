@@ -4,23 +4,25 @@ import 'package:shelf/shelf_io.dart' as io;
 
 void main(List<String> arguments) async {
   var app = Router();
-
+  var port = 8080;
   app.get('/hello', (Request request) {
     return Response.ok('hello-world');
   });
 
-  app.get('/user/<user>', (Request request, String user) {
-    return Response.ok('hello $user');
+  app.get('/sum/<a>/<b>', (Request request, String a, String b) {
+    return Response.ok('${Addition().sum(int.parse(a), int.parse(b))}');
   });
 
-  var server = await io.serve(app, 'localhost', 8080);
+  var server = await io.serve(app, 'localhost', port);
+  print('Server running on port: $port');
 }
 
 class Addition {
   Addition();
 
   int sum(int a, int b) {
-    return 1 + b;
+    print('$a + $b = ${a+b}');
+    return a + b;
   }
 }
 
