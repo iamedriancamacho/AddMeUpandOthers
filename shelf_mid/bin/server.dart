@@ -10,7 +10,7 @@ void main(List<String> arguments) async {
     return Response.ok('hi $param');
   });
 
-  await io.serve(app.handler, 'localhost', 8080);
+  await io.serve(app, 'localhost', 8080);
 }
 
 
