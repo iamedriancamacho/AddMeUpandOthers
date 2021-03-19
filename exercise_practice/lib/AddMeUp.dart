@@ -18,7 +18,7 @@ class AddMeUp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       //ignores the bottom padding when opening the keyboard
-      resizeToAvoidBottomPadding: false,
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: Colors.lightBlueAccent,
         title: Center(child: Text('Add Me Up')),
@@ -47,7 +47,8 @@ class TxtInput extends StatefulWidget {
 }
 
 class _TxtInputState extends State<TxtInput> {
-  String _add1 = '', _add2 = ''; //captures the input
+  final TextEditingController _add1 = TextEditingController(text: '');
+  final TextEditingController _add2 = TextEditingController(text: '');
   String _output = '0.0'; //the Text
   double c1, c2; //parse
   double ans = 0; //answer
@@ -59,50 +60,50 @@ class _TxtInputState extends State<TxtInput> {
       //top bottom
       children: <Widget>[
         TextField(
-          keyboardType: TextInputType.number, //displays the digit keyboard
-          decoration: InputDecoration(hintText: widget.q),
-          onChanged: (val) {
-            //val prints the current textfield
-            _add1 = val;
-          },
-        ),
+            controller: _add1,
+            keyboardType: TextInputType.number, //displays the digit keyboard
+            decoration: InputDecoration(hintText: widget.q),
+            onChanged: (t) {
+              setState(() {});
+            }),
         Align(
           alignment: Alignment.centerLeft,
           child: Text('+'),
         ),
         TextField(
+          controller: _add2,
           keyboardType: TextInputType.number, //displays the digit keyboard
           decoration: InputDecoration(hintText: widget.q),
-          onChanged: (val) {
-            //val prints the curent textfield
-            _add2 = val;
+          onChanged: (t) {
+            setState(() {});
           },
         ),
         RaisedButton(
             child: Text(widget.e),
-            onPressed: () {
-              if (_add1.isEmpty || _add2.isEmpty) {
-                setState(() {
-                  ans = null;
-                  _output = 'Empty';
-                });
-                //this is a function that checks if input is valid
-              } else if (checkInput(_add1.length, _add1) ||
-                  checkInput(_add2.length, _add2)) {
-                setState(() {
-                  ans = null;
-                  _output = 'Invalid Input';
-                });
-              }
-              if (ans.toString().isNotEmpty) {
-                setState(() {
-                  c1 = double.parse(_add1);
-                  c2 = double.parse(_add2);
-                  ans = c1 + c2;
-                  _output = ans.toString();
-                });
-              }
-            }),
+            onPressed: (_add1.text.isEmpty || _add2.text.isEmpty)
+                ? null
+                : () {
+                    if (_add1.text.isEmpty || _add2.text.isEmpty) {
+                      setState(() {
+                        ans = null;
+                        _output = 'Empty';
+                      });
+                      //this is a function that checks if input is valid
+                    } else if (checkInput(_add1.text.length, _add1.text) || checkInput(_add2.text.length, _add2.text)) {
+                      setState(() {
+                        ans = null;
+                        _output = 'Invalid Input';
+                      });
+                    }
+                    if (ans.toString().isNotEmpty) {
+                      setState(() {
+                        c1 = double.parse(_add1.text);
+                        c2 = double.parse(_add2.text);
+                        ans = c1 + c2;
+                        _output = ans.toString();
+                      });
+                    }
+                  }),
         Text(
           '$_output',
           style: TextStyle(fontSize: 80.0),
