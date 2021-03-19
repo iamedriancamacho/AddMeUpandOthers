@@ -84,7 +84,7 @@ class _TxtInputState extends State<TxtInput> {
             onPressed: (_add1.text.isEmpty || _add2.text.isEmpty)
                 ? null
                 : () async {
-                    var response = await http.get(Uri.parse("http://localhost:8080/sum/${_add1.text}/${_add2.text}"));
+                    var response = await http.get(Uri.parse("https://80fa3332fc98.ngrok.io/sum/${_add1.text}/${_add2.text}"));
                     print('Response status: ${response.statusCode}');
                     print('Response body: ${response.body}');
                     setState(() {

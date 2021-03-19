@@ -13,6 +13,9 @@ void main(List<String> arguments) async {
     return Response.ok('${Addition().sum(int.parse(a), int.parse(b))}');
   });
 
+  app.get('/', (Request request) {
+    return Response.ok("Ed's server is running on port: $port");
+  });
   var server = await io.serve(app, 'localhost', port);
   print('Server running on port: $port');
 }
