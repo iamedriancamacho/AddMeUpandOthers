@@ -1,0 +1,6 @@
+
+.DS_Store
+
+*.xcbuild
+
+exercise_practice/ios/build/XCBuildData/

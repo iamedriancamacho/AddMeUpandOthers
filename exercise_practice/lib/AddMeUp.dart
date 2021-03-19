@@ -18,7 +18,7 @@ class AddMeUp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       //ignores the bottom padding when opening the keyboard
-      resizeToAvoidBottomPadding: false,
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: Colors.lightBlueAccent,
         title: Center(child: Text('Add Me Up')),
@@ -62,7 +62,7 @@ class _TxtInputState extends State<TxtInput> {
           keyboardType: TextInputType.number, //displays the digit keyboard
           decoration: InputDecoration(hintText: widget.q),
           onChanged: (val) {
-            //val prints the current textfield
+            //val prints the current textField
             _add1 = val;
           },
         ),
@@ -74,13 +74,13 @@ class _TxtInputState extends State<TxtInput> {
           keyboardType: TextInputType.number, //displays the digit keyboard
           decoration: InputDecoration(hintText: widget.q),
           onChanged: (val) {
-            //val prints the curent textfield
+            //val prints the current textField
             _add2 = val;
           },
         ),
         RaisedButton(
             child: Text(widget.e),
-            onPressed: () {
+            onPressed: (_add1.isEmpty || _add2.isEmpty)?() {
               if (_add1.isEmpty || _add2.isEmpty) {
                 setState(() {
                   ans = null;
@@ -102,7 +102,7 @@ class _TxtInputState extends State<TxtInput> {
                   _output = ans.toString();
                 });
               }
-            }),
+            }:null),
         Text(
           '$_output',
           style: TextStyle(fontSize: 80.0),
